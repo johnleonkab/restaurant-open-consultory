@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fdfdfd;
+  --foreground: #1a1a1a;
+  
+  /* Savia Brand Colors */
+  --savia-dark: #143328; /* Deep Forest */
+  --savia-primary: #1e4d3b; /* Primary Green */
+  --savia-light: #e8f5e9; /* Light Mint */
+  --savia-accent: #c8e036; /* Tech Lime */
 }
 
 @theme inline {
