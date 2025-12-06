@@ -10,45 +10,11 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSuccess }: LoginFormProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSignUp, setIsSignUp] = useState(false);
-  const router = useRouter();
   const supabase = createClient();
 
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
 
-    try {
-      if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-        });
-        if (error) throw error;
-        alert('¡Registro exitoso! Revisa tu email para confirmar.');
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
-        if (onSuccess) {
-          onSuccess();
-        } else {
-          router.push('/dashboard');
-        }
-      }
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -74,60 +40,17 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
         <p className="text-[#1E4D3B]/80 font-medium">Inteligencia Gastronómica</p>
       </div>
 
-      <form onSubmit={handleAuth} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#C8E036] focus:border-[#C8E036] outline-none transition-all"
-            placeholder="tu@email.com"
-            required
-          />
+      {error && (
+        <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg mb-4">
+          {error}
         </div>
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#C8E036] focus:border-[#C8E036] outline-none transition-all"
-            placeholder="••••••••"
-            required
-          />
-        </div>
-
-        {error && (
-          <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg">
-            {error}
-          </div>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-3 bg-[#1E4D3B] text-white rounded-lg font-semibold hover:bg-[#143328] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-[#1E4D3B]/20"
-        >
-          {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-          {isSignUp ? 'Crear Cuenta' : 'Iniciar Sesión'}
-        </button>
-      </form>
-
-      <div className="relative my-6">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-slate-200"></div>
-        </div>
-        <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-white text-slate-500">O continúa con</span>
-        </div>
-      </div>
+      )}
 
       <button
         type="button"
         onClick={handleGoogleLogin}
         disabled={loading}
-        className="w-full py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+        className="w-full py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24">
           <path
@@ -147,16 +70,11 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             fill="#EA4335"
           />
         </svg>
-        Google
+        Continuar con Google
       </button>
 
-      <div className="mt-6 text-center">
-        <button
-          onClick={() => setIsSignUp(!isSignUp)}
-          className="text-sm text-[#1E4D3B] hover:underline font-medium"
-        >
-          {isSignUp ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Regístrate'}
-        </button>
+      <div className="mt-8 text-center text-xs text-slate-400">
+        Al continuar, aceptas nuestros términos y condiciones.
       </div>
     </div>
   );
