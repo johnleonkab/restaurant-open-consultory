@@ -72,7 +72,7 @@ export default function ConceptPage() {
   ];
 
   return (
-    <div className="h-[calc(100vh-2rem)] p-4 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div className="h-full p-4 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
       
       {/* LEFT COLUMN: CHAT (40%) */}
       <div className="lg:col-span-5 h-full">
