@@ -76,7 +76,7 @@ export default function ConceptPage() {
       
       {/* LEFT COLUMN: CHAT (40%) */}
       <div className="lg:col-span-5 h-full">
-        <ChatInterface phase="CONCEPT" />
+        <ChatInterface />
       </div>
 
       {/* RIGHT COLUMN: WIDGET (60%) */}

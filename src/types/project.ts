@@ -155,6 +155,13 @@ export interface LocationData {
   status: "SEARCHING" | "SELECTED";
   candidates: CandidateLocation[];
   selectedCandidateId?: string;
+  selectedLocation?: {
+    address: string;
+    surfaceArea: number;
+    hasSmokeVent: boolean;
+    monthlyRent?: number;
+    condition?: string;
+  };
   searchChecklist: ChecklistItem[];
 }
 
