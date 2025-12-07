@@ -103,12 +103,41 @@ const MENU_ITEMS: { title: string; href: string; icon: LucideIcon; phase: Projec
   },
 ];
 
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
 export function Sidebar() {
   const { project } = useProjectStore();
   const { isSidebarOpen, closeSidebar } = useMobileUIStore();
   const router = useRouter();
+  const [dailyUsage, setDailyUsage] = useState(0);
+  const [periodUsage, setPeriodUsage] = useState(0);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchUsage = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const metadata = user.user_metadata || {};
+      const aiUsage = metadata.ai_usage || { history: [] };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const history = (aiUsage.history || []).filter((t: any) => typeof t === 'number');
+
+      const now = Date.now();
+      const oneDayAgo = now - 24 * 60 * 60 * 1000;
+      const fifteenDaysAgo = now - 15 * 24 * 60 * 60 * 1000;
+
+      const daily = history.filter((t: number) => t > oneDayAgo).length;
+      const period = history.filter((t: number) => t > fifteenDaysAgo).length;
+
+      setDailyUsage(daily);
+      setPeriodUsage(period);
+    };
+
+    fetchUsage();
+  }, [project.data.chatHistory, supabase.auth]);
 
   return (
     <>
@@ -163,11 +192,22 @@ export function Sidebar() {
 
       <div className="p-4 border-t border-slate-100">
         <div className="bg-slate-50 p-3 rounded-lg">
-          <p className="text-xs font-medium text-slate-500 mb-2">Progreso Global</p>
-          <div className="w-full bg-slate-200 rounded-full h-2">
-            <div className="bg-[#1E4D3B] h-2 rounded-full" style={{ width: '10%' }} />
+          <div className="flex justify-between items-center mb-2">
+            <p className="text-xs font-medium text-slate-500">Uso Diario IA</p>
+            <p className="text-xs font-medium text-slate-700">{dailyUsage}/10</p>
           </div>
-          <p className="text-xs text-right text-slate-400 mt-1">10%</p>
+          <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
+            <div 
+              className={cn(
+                "h-2 rounded-full transition-all duration-500",
+                dailyUsage >= 10 ? "bg-red-500" : "bg-[#1E4D3B]"
+              )}
+              style={{ width: `${Math.min((dailyUsage / 10) * 100, 100)}%` }} 
+            />
+          </div>
+          <p className="text-[10px] text-slate-400 text-center">
+            Uso quincenal: {periodUsage}/30
+          </p>
         </div>
       </div>
       </div>
