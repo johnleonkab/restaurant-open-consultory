@@ -194,19 +194,19 @@ export function Sidebar() {
         <div className="bg-slate-50 p-3 rounded-lg">
           <div className="flex justify-between items-center mb-2">
             <p className="text-xs font-medium text-slate-500">Uso Diario IA</p>
-            <p className="text-xs font-medium text-slate-700">{dailyUsage}/10</p>
+            <p className="text-xs font-medium text-slate-700">{dailyUsage}/25</p>
           </div>
           <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
             <div 
               className={cn(
                 "h-2 rounded-full transition-all duration-500",
-                dailyUsage >= 10 ? "bg-red-500" : "bg-[#1E4D3B]"
+                dailyUsage >= 25 ? "bg-red-500" : "bg-[#1E4D3B]"
               )}
-              style={{ width: `${Math.min((dailyUsage / 10) * 100, 100)}%` }} 
+              style={{ width: `${Math.min((dailyUsage / 25) * 100, 100)}%` }} 
             />
           </div>
           <p className="text-[10px] text-slate-400 text-center">
-            Uso quincenal: {periodUsage}/30
+            Uso quincenal: {periodUsage}/75
           </p>
         </div>
       </div>

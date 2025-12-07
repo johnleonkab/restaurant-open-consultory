@@ -104,7 +104,8 @@ export default function ChatInterface() {
       }
 
       if (data.updates && Object.keys(data.updates).length > 0) {
-        const currentData = project.data;
+        // Get fresh state to avoid overwriting optimistic updates
+        const currentData = useProjectStore.getState().project.data;
         
         // Helper function for deep merge
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -224,7 +224,7 @@ export async function POST(request: Request) {
     const oneDayAgo = now - 24 * 60 * 60 * 1000;
     const last24hUsage = recentHistory.filter((timestamp: number) => timestamp > oneDayAgo);
 
-    if (recentHistory.length >= 30 || last24hUsage.length >= 10) {
+    if (recentHistory.length >= 75 || last24hUsage.length >= 25) {
       return NextResponse.json(
         { error: 'Usage limit reached', code: 'LIMIT_REACHED' }, 
         { status: 403 }
