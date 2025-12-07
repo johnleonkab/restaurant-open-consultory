@@ -231,14 +231,25 @@ export async function POST(request: Request) {
       );
     }
 
-    // Update usage
-    await supabase.auth.updateUser({
-      data: {
-        ai_usage: {
-          history: [...recentHistory, now]
+    // Update usage (non-blocking)
+    try {
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: {
+          ai_usage: {
+            history: [...recentHistory, now]
+          }
         }
+      });
+      if (updateError) {
+        console.error('Failed to update usage stats:', updateError);
       }
-    });
+    } catch (err) {
+      console.error('Exception updating usage stats:', err);
+    }
+
+    if (!API_KEY) {
+      throw new Error("GEMINI_API_KEY is not set");
+    }
 
     const { messages, currentPhase, projectState } = await request.json();
 
@@ -298,7 +309,10 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error in chat API:', error);
     return NextResponse.json(
-      { error: 'Failed to process chat' },
+      { 
+        error: 'Failed to process chat', 
+        details: error instanceof Error ? error.message : String(error) 
+      },
       { status: 500 }
     );
   }
