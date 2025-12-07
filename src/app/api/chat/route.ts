@@ -196,8 +196,50 @@ ESTRUCTURA DE DATOS (Ejemplo para actualizaciones):
 }
 `;
 
+import { createClient } from '@/lib/supabase/server';
+
 export async function POST(request: Request) {
   try {
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Check usage limits
+    const user = session.user;
+    const metadata = user.user_metadata || {};
+    const aiUsage = metadata.ai_usage || { history: [] };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const usageHistory = (aiUsage.history || []).filter((timestamp: any) => typeof timestamp === 'number');
+
+    const now = Date.now();
+    const fifteenDaysAgo = now - 15 * 24 * 60 * 60 * 1000;
+    
+    // Filter history to keep only last 15 days
+    const recentHistory = usageHistory.filter((timestamp: number) => timestamp > fifteenDaysAgo);
+    
+    // Check daily limit (rolling 24h)
+    const oneDayAgo = now - 24 * 60 * 60 * 1000;
+    const last24hUsage = recentHistory.filter((timestamp: number) => timestamp > oneDayAgo);
+
+    if (recentHistory.length >= 30 || last24hUsage.length >= 10) {
+      return NextResponse.json(
+        { error: 'Usage limit reached', code: 'LIMIT_REACHED' }, 
+        { status: 403 }
+      );
+    }
+
+    // Update usage
+    await supabase.auth.updateUser({
+      data: {
+        ai_usage: {
+          history: [...recentHistory, now]
+        }
+      }
+    });
+
     const { messages, currentPhase, projectState } = await request.json();
 
     // Usamos el modelo experimental más reciente para mejor generación de código (SVG) y razonamiento.

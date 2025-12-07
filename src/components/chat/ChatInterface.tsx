@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { useProjectStore } from '@/store/projectStore';
 import { createClient } from '@/lib/supabase/client';
 import { AuthModal } from '@/components/auth/AuthModal';
+import { LimitModal } from './LimitModal';
 
 interface Message {
   id: string;
@@ -33,6 +34,7 @@ export default function ChatInterface() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showLimitModal, setShowLimitModal] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
 
@@ -75,6 +77,15 @@ export default function ChatInterface() {
           projectState: project.data
         })
       });
+
+      if (response.status === 403) {
+        const errorData = await response.json();
+        if (errorData.code === 'LIMIT_REACHED') {
+          setShowLimitModal(true);
+          setIsLoading(false);
+          return;
+        }
+      }
 
       const data = await response.json();
 
@@ -220,6 +231,11 @@ export default function ChatInterface() {
         isOpen={showAuthModal} 
         onClose={() => setShowAuthModal(false)}
         message="Inicia sesión para chatear con la IA y guardar tus conversaciones."
+      />
+      
+      <LimitModal 
+        isOpen={showLimitModal} 
+        onClose={() => setShowLimitModal(false)}
       />
     </div>
   );
