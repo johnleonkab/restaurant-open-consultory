@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌿 Savia - Gastronomic Intelligence
 
-## Getting Started
+> **From idea to real product in < 5 hours.** 🚀
+> 
+> *An experiment in Product Management + AI-Assisted Engineering.*
 
-First, run the development server:
+![Savia Banner](https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 💡 What is Savia?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Savia is an **intelligent virtual consultant for gastronomic entrepreneurs**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+It helps transform an abstract idea ("I want to open a pizzeria") into a structured and viable business plan in minutes. It guides the user through 12 critical phases: from concept and financial viability to design, suppliers, and technology.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**DEMO AVAILABLE HERE: https://dulcet-jalebi-2ed963.netlify.app**
 
-## Learn More
+## ⚡ The Story: The 5-Hour Challenge
 
-To learn more about Next.js, take a look at the following resources:
+This project is not just a tool; it is a **statement of intent** regarding the future of software development and Product Management.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The goal was simple yet ambitious: **Build a functional, beautiful, and useful SaaS in a single afternoon.**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### "AI-Driven Product Development" Methodology
 
-## Deploy on Vercel
+1.  **Solid Definition (1h)**: Not a single line of code was written until the *what* and *why* were clear. Product definition, user journey, and value proposition.
+2.  **Architecture & UI (1h)**: System design, stack selection (Next.js + Supabase), and interface design.
+3.  **AI Development (2.5h)**: Intensive pair programming with advanced LLMs to generate code, business logic, and complex components.
+4.  **Deployment & Measurement (0.5h)**: Production deployment and advanced analytics configuration with Amplitude.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   **Frontend**: Next.js 14 (App Router), React, TailwindCSS, Framer Motion.
+*   **Backend**: Supabase (Auth & Database).
+*   **AI Core**: Google Gemini 2.0 Flash (Reasoning and plan generation).
+*   **Analytics**: Amplitude (Event and user tracking).
+*   **Integrations**: CoverManager (Reservation management).
+
+## ✨ Key Features
+
+*   🤖 **Consultative Chat**: An AI with an expert personality that interviews and advises you.
+*   📊 **Real-Time Plan**: Your business plan is built and updated automatically as you chat.
+*   💰 **Viability Analysis**: Automatic calculations of CAPEX, OPEX, and break-even point.
+*   🔒 **Persistence**: Save your progress and continue on any device.
+*   📈 **Smart Limits**: Usage control system (Rate Limiting) for cost management.
+
+## 🚀 How to run locally
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/johnleonkab/restaurant-open-consultory.git
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Configure environment variables (`.env.local`):
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=your_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+    GEMINI_API_KEY=your_api_key
+    ```
+4. Run the migrations in supabase from the folder supabase/migrations 
+5.  Run the development server:
+    ```bash
+    npm run dev
+    ```
+
+## 👨‍💻 Author
+
+**John Leon**
+*Product Manager & Maker (Currently @ CoverManager)*
+
+---
+
+*Made with ❤️ and lots of ☕.*
