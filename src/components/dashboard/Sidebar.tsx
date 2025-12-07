@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { useProjectStore } from '@/store/projectStore';
+import { useMobileUIStore } from '@/store/mobileUIStore';
 import {
   LayoutDashboard,
   Lightbulb,
@@ -106,10 +107,24 @@ import { useRouter } from 'next/navigation';
 
 export function Sidebar() {
   const { project } = useProjectStore();
+  const { isSidebarOpen, closeSidebar } = useMobileUIStore();
   const router = useRouter();
 
   return (
-    <div className="w-64 bg-white border-r border-slate-200 h-screen flex flex-col fixed left-0 top-0 overflow-y-auto">
+    <>
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={closeSidebar}
+        />
+      )}
+
+      <div className={cn(
+        "w-64 bg-white border-r border-slate-200 h-screen flex flex-col fixed left-0 top-0 overflow-y-auto z-50 transition-transform duration-300 ease-in-out",
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full",
+        "lg:translate-x-0"
+      )}>
       <div className="p-6 border-b border-slate-100">
         <h1 className="text-2xl font-serif font-bold text-[#143328] tracking-tight">Savia</h1>
         <p className="text-xs text-slate-500 mt-1">
@@ -130,6 +145,7 @@ export function Sidebar() {
               onClick={() => {
                 useProjectStore.getState().setPhase(item.phase);
                 router.push('/dashboard');
+                closeSidebar();
               }}
               className={cn(
                 "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors text-left",
@@ -154,6 +170,7 @@ export function Sidebar() {
           <p className="text-xs text-right text-slate-400 mt-1">10%</p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

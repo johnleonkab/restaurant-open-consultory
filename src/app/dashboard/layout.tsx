@@ -11,7 +11,7 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-[#E8F5E9]">
       <ProjectSyncer />
       <Sidebar />
-      <main className="pl-64 h-screen flex flex-col">
+      <main className="lg:pl-64 h-screen flex flex-col">
         <Navbar />
         <div className="flex-1 overflow-hidden">
           {children}
