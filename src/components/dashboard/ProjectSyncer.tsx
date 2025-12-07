@@ -9,7 +9,7 @@ import { Loader2, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function ProjectSyncer() {
-  const { project, updateProject } = useProjectStore();
+  const { project, updateProject, resetProject } = useProjectStore();
   const { isSaving, setIsSaving, setLastSaved, lastSaved } = useSyncStore();
   const supabase = createClient();
   const debouncedProject = useDebounce(project, 2000); // Debounce save every 2 seconds
@@ -19,6 +19,12 @@ export function ProjectSyncer() {
     const loadProject = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+
+      // Safety check: If current project belongs to another user, reset it
+      if (project.userId !== 'user-1' && project.userId !== user.id) {
+        resetProject();
+        // We continue execution to load the correct project for the new user
+      }
 
       const { data: projects, error } = await supabase
         .from('projects')

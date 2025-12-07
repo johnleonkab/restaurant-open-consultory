@@ -10,7 +10,7 @@ import { AuthModal } from '@/components/auth/AuthModal';
 import { useMobileUIStore } from '@/store/mobileUIStore';
 
 export function Navbar() {
-  const { project } = useProjectStore();
+  const { project, resetProject } = useProjectStore();
   const { toggleSidebar } = useMobileUIStore();
   const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -50,6 +50,7 @@ export function Navbar() {
   };
 
   const handleLogout = async () => {
+    resetProject(); // Clear local state
     await supabase.auth.signOut();
     router.push('/login');
   };
