@@ -22,6 +22,14 @@ export function Navbar() {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
+      
+      if (user && user.email) {
+        // @ts-ignore
+        if (window.amplitude) {
+          // @ts-ignore
+          window.amplitude.setUserId(user.email);
+        }
+      }
     };
     getUser();
   }, [supabase.auth]);

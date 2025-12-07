@@ -76,14 +76,7 @@ export default function TechWidget() {
     });
   };
 
-  const handleConnectCoverManager = () => {
-    updatePhaseData('tech', {
-      reservation: {
-        selected: 'COVER_MANAGER',
-        status: 'CONTACTED'
-      }
-    });
-  };
+
 
   return (
     <div className="space-y-8 p-1">
@@ -94,8 +87,97 @@ export default function TechWidget() {
         </div>
       </div>
 
-      {/* POS Section */}
+      {/* Reservations Section - CoverManager Highlight */}
       <section className="space-y-4">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+            <Calendar className="w-5 h-5" />
+          </div>
+          <h2 className="text-lg font-semibold text-slate-900">Gestión de Reservas</h2>
+        </div>
+
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 text-white relative overflow-hidden">
+          {/* Decorative background elements */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500 rounded-full blur-3xl opacity-20 -ml-10 -mb-10"></div>
+
+          <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-6">
+              <div>
+                <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 text-indigo-200 text-xs font-medium mb-4">
+                  <Star className="w-3 h-3 fill-current" /> Partner Recomendado
+                </div>
+                <h3 className="text-3xl font-bold mb-2">CoverManager</h3>
+                <p className="text-slate-300 leading-relaxed">
+                  El estándar de oro en la gestión de reservas y hospitalidad. 
+                  Optimiza tus mesas, reduce los "no-shows" y fideliza a tus clientes.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <Smartphone className="w-5 h-5 text-indigo-300" />
+                  </div>
+                  <span className="text-sm font-medium">Reservas 24/7</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <CreditCard className="w-5 h-5 text-indigo-300" />
+                  </div>
+                  <span className="text-sm font-medium">Garantía No-Show</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <BarChart3 className="w-5 h-5 text-indigo-300" />
+                  </div>
+                  <span className="text-sm font-medium">Analítica Avanzada</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <MessageSquare className="w-5 h-5 text-indigo-300" />
+                  </div>
+                  <span className="text-sm font-medium">CRM Clientes</span>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                  <a 
+                    href="https://www.covermanager.com/es/solicita-demo/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-indigo-50 transition-all flex items-center gap-2 shadow-lg shadow-indigo-900/50 inline-flex"
+                  >
+                    Contactar con CoverManager
+                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+              </div>
+            </div>
+
+            <div className="hidden md:block relative">
+              {/* Abstract representation of the dashboard */}
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                <div className="flex gap-2 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div className="space-y-3">
+                  <div className="h-32 bg-white/5 rounded-lg w-full animate-pulse"></div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="h-20 bg-white/5 rounded-lg"></div>
+                    <div className="h-20 bg-white/5 rounded-lg"></div>
+                    <div className="h-20 bg-white/5 rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* POS Section */}
+      <section className="space-y-4 pt-8 border-t border-slate-200">
         <div className="flex items-center gap-2 mb-4">
           <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
             <Monitor className="w-5 h-5" />
@@ -184,105 +266,6 @@ export default function TechWidget() {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* Reservations Section - CoverManager Highlight */}
-      <section className="space-y-4 pt-8 border-t border-slate-200">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
-            <Calendar className="w-5 h-5" />
-          </div>
-          <h2 className="text-lg font-semibold text-slate-900">Gestión de Reservas</h2>
-        </div>
-
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 text-white relative overflow-hidden">
-          {/* Decorative background elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500 rounded-full blur-3xl opacity-20 -ml-10 -mb-10"></div>
-
-          <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-              <div>
-                <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 text-indigo-200 text-xs font-medium mb-4">
-                  <Star className="w-3 h-3 fill-current" /> Partner Recomendado
-                </div>
-                <h3 className="text-3xl font-bold mb-2">CoverManager</h3>
-                <p className="text-slate-300 leading-relaxed">
-                  El estándar de oro en la gestión de reservas y hospitalidad. 
-                  Optimiza tus mesas, reduce los "no-shows" y fideliza a tus clientes.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white/10 rounded-lg">
-                    <Smartphone className="w-5 h-5 text-indigo-300" />
-                  </div>
-                  <span className="text-sm font-medium">Reservas 24/7</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white/10 rounded-lg">
-                    <CreditCard className="w-5 h-5 text-indigo-300" />
-                  </div>
-                  <span className="text-sm font-medium">Garantía No-Show</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white/10 rounded-lg">
-                    <BarChart3 className="w-5 h-5 text-indigo-300" />
-                  </div>
-                  <span className="text-sm font-medium">Analítica Avanzada</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white/10 rounded-lg">
-                    <MessageSquare className="w-5 h-5 text-indigo-300" />
-                  </div>
-                  <span className="text-sm font-medium">CRM Clientes</span>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                {techData.reservation?.status === 'CONTACTED' || techData.reservation?.status === 'ACTIVE' ? (
-                  <div className="bg-green-500/20 border border-green-500/50 rounded-xl p-4 flex items-center gap-3">
-                    <div className="bg-green-500 rounded-full p-1">
-                      <CheckCircle2 className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-green-100">Solicitud Enviada</p>
-                      <p className="text-xs text-green-200/80">Un especialista de CoverManager te contactará pronto.</p>
-                    </div>
-                  </div>
-                ) : (
-                  <button 
-                    onClick={handleConnectCoverManager}
-                    className="group bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-indigo-50 transition-all flex items-center gap-2 shadow-lg shadow-indigo-900/50"
-                  >
-                    Contactar con CoverManager
-                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            <div className="hidden md:block relative">
-              {/* Abstract representation of the dashboard */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                <div className="flex gap-2 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                </div>
-                <div className="space-y-3">
-                  <div className="h-32 bg-white/5 rounded-lg w-full animate-pulse"></div>
-                  <div className="grid grid-cols-3 gap-3">
-                    <div className="h-20 bg-white/5 rounded-lg"></div>
-                    <div className="h-20 bg-white/5 rounded-lg"></div>
-                    <div className="h-20 bg-white/5 rounded-lg"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </div>
