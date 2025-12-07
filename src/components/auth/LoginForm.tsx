@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
@@ -15,6 +15,14 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   const supabase = createClient();
 
 
+
+  const [isInAppBrowser, setIsInAppBrowser] = useState(false);
+
+  useEffect(() => {
+    const ua = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const isInApp = /(LinkedInApp|FBAN|FBAV|Instagram|Twitter|Snapchat)/i.test(ua);
+    setIsInAppBrowser(isInApp);
+  }, []);
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -40,6 +48,14 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
         <p className="text-[#1E4D3B]/80 font-medium">Inteligencia Gastronómica</p>
       </div>
 
+      {isInAppBrowser && (
+        <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-lg mb-4">
+          <p className="font-bold mb-1">⚠️ Navegador no soportado</p>
+          <p>Google no permite iniciar sesión desde navegadores integrados (como el de LinkedIn o Instagram).</p>
+          <p className="mt-2 font-medium">Por favor, abre esta página en Safari o Chrome.</p>
+        </div>
+      )}
+
       {error && (
         <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg mb-4">
           {error}
@@ -49,8 +65,8 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
       <button
         type="button"
         onClick={handleGoogleLogin}
-        disabled={loading}
-        className="w-full py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
+        disabled={loading || isInAppBrowser}
+        className="w-full py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm disabled:cursor-not-allowed"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24">
           <path
